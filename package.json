@@ -1,0 +1,28 @@
+{
+  "name": "cs546-final-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.3",
+    "handlebars": "^4.7.6",
+    "init": "^0.1.2",
+    "mongodb": "^3.5.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrana2/CS546-Final-Project.git"
+  },
+  "author": "himanshu, matthew, david, and pierce",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hrana2/CS546-Final-Project/issues"
+  },
+  "homepage": "https://github.com/hrana2/CS546-Final-Project#readme"
+}
