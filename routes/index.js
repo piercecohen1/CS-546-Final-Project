@@ -4,24 +4,16 @@ const whattodoRoutes = require('./whattodo');
 const path = require('path');
 
 const constructorMethod = (app) => {
-    //app.use('/polls', pollsRoutes);
-    //app.use('/tips', tipsRoutes);
-    //app.use('/whattodo', whattodoRoutes);
+  app.use('/polls', pollsRoutes);
+  app.use('/tips', tipsRoutes);
+  app.use('/whattodo', whattodoRoutes);
+
 	app.get('/', (req, res) => {
-		res.sendFile(path.resolve('static/home.html'));
-    });
-    app.get('/tips', (req, res) => {
-		res.sendFile(path.resolve('static/tips.html'));
-    });
-    app.get('/whattodo', (req, res) => {
-		res.sendFile(path.resolve('static/whattodo.html'));
-    });
-    app.get('/polls', (req, res) => {
-		res.sendFile(path.resolve('static/polls.html'));
-	});
+		res.render('pages/login', {error: false});
+  });
 
 	app.use('*', (req, res) => {
-		res.sendFile(path.resolve('static/home.html'));
+		res.render('pages/login', {error: false});
 	});
 };
 

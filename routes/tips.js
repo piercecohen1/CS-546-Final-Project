@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    res.sendFile(path.resolve('static/tips.html'));
+    res.render('pages/tips');
 });
   
 module.exports = router;
