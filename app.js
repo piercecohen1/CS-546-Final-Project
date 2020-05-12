@@ -18,6 +18,19 @@ app.use(cookieParser());
 
 const bcrypt = require('bcryptjs');
 
+const handlebarsInstance = exphbs.create({
+	defaultLayout: 'main',
+	// Specify helpers which are only registered on this instance.
+	helpers: {
+	  asJSON: (obj, spacing) => {
+		if (typeof spacing === 'number') return new Handlebars.SafeString(JSON.stringify(obj, null, spacing));
+  
+		return new Handlebars.SafeString(JSON.stringify(obj));
+	  }
+	},
+	partialsDir: ['views/partials/']
+  });
+
 app.use(
 	session({
 		name: 'Session',
