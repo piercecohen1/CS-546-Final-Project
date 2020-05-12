@@ -1,6 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 const uuid = require('uuid');
+const { ObjectId } = require('mongodb');
 
 let exportedMethods = {
   async getAllUsers() {
@@ -13,6 +14,7 @@ let exportedMethods = {
   // methods on an object with this shorthand!
   async getUserById(id) {
     const userCollection = await users();
+    //const objId = ObjectId.createFromHexString(id);
     const user = await userCollection.findOne({_id: id});
     if (!user) throw 'User not found';
     return user;
@@ -33,7 +35,8 @@ let exportedMethods = {
   },
   async removeUser(id) {
     const userCollection = await users();
-    const deletionInfo = await userCollection.removeOne({_id: id});
+    const objId = ObjectId.createFromHexString(id);
+    const deletionInfo = await userCollection.removeOne({_id: objId});
     if (deletionInfo.deletedCount === 0) {
       throw `Could not delete user with id of ${id}`;
     }
@@ -49,6 +52,7 @@ let exportedMethods = {
     };
 
     const userCollection = await users();
+    //const objId = ObjectId.createFromHexString(id);
     const updateInfo = await userCollection.updateOne({_id: id}, {$set: userUpdateInfo});
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
@@ -69,11 +73,12 @@ let exportedMethods = {
     return await this.getUserById(userId);
   },
   async removePostFromUser(userId, postId) {
+    //const objId = ObjectId.createFromHexString(id);
     let currentUser = await this.getUserById(userId);
     console.log(currentUser);
 
     const userCollection = await users();
-    const updateInfo = await userCollection.updateOne({_id: userId}, {$pull: {posts: {id: postId}}});
+    const updateInfo = await userCollection.updateOne({_id: id}, {$pull: {posts: {id: postId}}});
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
     return await this.getUserById(userId);

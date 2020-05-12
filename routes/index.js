@@ -20,15 +20,23 @@ const constructorMethod = (app) => {
 			var i;
 			for (i = 0; i < allUsers.length; i++) {
 				tuser = allUsers[i];
-				if (tuser.userName){
-					uname = tuser;
+				if (tuser.userName == data.username){
+					var uname = tuser;
 				}
 			}
-			if(uname == undefined){
+			try{
+				if(uname == undefined){
+					res.status(401).render('pages/login', {error: true});
+				}
+			}catch(e){
 				res.status(401).render('pages/login', {error: true});
 			}
 			let compare = false;
-			compare = await bcrypt.compare(data.password, uname.hashedPassword);
+			try{
+				compare = await bcrypt.compare(data.password, uname.hashedPassword);
+			}catch(e){
+				res.status(401).render('pages/login', {error: true});
+			}
 			if(!compare){
 				res.status(401).render('pages/login', {error: true});
 			}else{
@@ -45,16 +53,23 @@ const constructorMethod = (app) => {
 			res.status(400).render('pages/login', {serror: true});
 		}else{
 			const allUsers = await userData.getAllUsers();
-			uname = allUsers.find(f => f.username == data.username);
+			var i;
+			for (i = 0; i < allUsers.length; i++) {
+				tuser = allUsers[i];
+				if (tuser.userName == data.username){
+					var uname = tuser;
+				}
+			}
 			if(uname != undefined){
 				res.status(401).render('pages/login', {serror: true});
+			}else{
+				const hash = await bcrypt.hash(data.password, saltRounds);
+				const user = await userData.addUser(data.username, hash);
+	
+				req.session.user = user;
+				req.session.AuthCookie = true;
+				return res.render('pages/home');
 			}
-			const hash = await bcrypt.hash(data.password, saltRounds);
-			const user = await userData.addUser(data.username, hash);
-
-			req.session.user = uname;
-			req.session.AuthCookie = true;
-			return res.render('pages/home');
 		}
 	});
 
@@ -68,6 +83,20 @@ const constructorMethod = (app) => {
 			res.clearCookie('user');
 			req.session.destroy();
 			res.render('pages/logout');
+		}
+	});
+
+	app.get('/delete', async (req, res) => {
+		if(!req.session.AuthCookie){
+			res.render('pages/login', {error: false});
+		}else{
+			const teuser = await userData.removeUser(req.session.user._id);
+			const anHourAgo = new Date();
+			anHourAgo.setHours(anHourAgo.getHours() - 1);
+			res.clearCookie('AuthCookie');
+			res.clearCookie('user');
+			req.session.destroy();
+			res.render('pages/login', {deleted: true});
 		}
 	});
 

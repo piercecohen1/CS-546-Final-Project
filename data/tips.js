@@ -2,6 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const posts = mongoCollections.posts;
 const users = require('./users');
 const uuid = require('uuid');
+const { ObjectId } = require('mongodb');
 
 const exportedMethods = {
   async getAllPosts() {
@@ -16,6 +17,7 @@ const exportedMethods = {
   },
   async getPostById(id) {
     const postCollection = await posts();
+    //const objId = ObjectId.createFromHexString(id);
     const post = await postCollection.findOne({_id: id});
 
     if (!post) throw 'Post not found';
@@ -60,6 +62,7 @@ const exportedMethods = {
       console.log(e);
       return;
     }
+    //const objId = ObjectId.createFromHexString(id);
     const deletionInfo = await postCollection.removeOne({_id: id});
     if (deletionInfo.deletedCount === 0) {
       throw `Could not delete post with id of ${id}`;
@@ -84,6 +87,7 @@ const exportedMethods = {
       updatedPostData.body = updatedPost.body;
     }
 
+    //const objId = ObjectId.createFromHexString(id);
     await postCollection.updateOne({_id: id}, {$set: updatedPostData});
 
     return await this.getPostById(id);
