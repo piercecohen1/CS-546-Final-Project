@@ -17,12 +17,12 @@ let exportedMethods = {
     if (!user) throw 'User not found';
     return user;
   },
-  async addUser(firstName, lastName) {
+  async addUser(userName, hashedPassword) {
     const userCollection = await users();
 
     let newUser = {
-      firstName: firstName,
-      lastName: lastName,
+      userName: userName,
+      hashedPassword: hashedPassword,
       
       posts: []
     };

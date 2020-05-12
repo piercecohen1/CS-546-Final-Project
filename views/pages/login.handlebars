@@ -2,6 +2,10 @@
   <p>Wrong Username and/or Password!</p>
 {{/if}}
 
+{{#if serror}}
+  <p>Error in Creating Account</p>
+{{/if}}
+
 {{#if log}}
   <p>You must first Log In!</p>
 {{/if}}
@@ -15,5 +19,17 @@
     <input type="password" placeholder="Enter Password" name="password" id="password">
     <br>
     <button type="submit">Login</button>
+  </div>
+</form>
+
+<form id = "signup-form" action = "/signup" method = "post">
+  <div class="container">
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" id="suusername">
+    <br>
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" id="supassword">
+    <br>
+    <button type="submit">Sign Up</button>
   </div>
 </form>

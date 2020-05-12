@@ -27,6 +27,46 @@ app.use(
 	})
 );
 
+app.use('/logout', (req, res, next) => {
+	if (!req.session.AuthCookie) {
+		res.render('pages/login');
+	} else {
+		next();
+	}
+});
+
+app.use('/tips', (req, res, next) => {
+	if (!req.session.AuthCookie) {
+		res.render('pages/login');
+	} else {
+		next();
+	}
+});
+
+app.use('/polls', (req, res, next) => {
+	if (!req.session.AuthCookie) {
+		res.render('pages/login');
+	} else {
+		next();
+	}
+});
+
+app.use('/whattodo', (req, res, next) => {
+	if (!req.session.AuthCookie) {
+		res.render('pages/login');
+	} else {
+		next();
+	}
+});
+
+app.use('/home', (req, res, next) => {
+	if (!req.session.AuthCookie) {
+		res.render('pages/login');
+	} else {
+		next();
+	}
+});
+
 configRoutes(app);
 
 app.listen(3000, () => {
