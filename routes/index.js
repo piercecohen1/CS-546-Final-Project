@@ -18,24 +18,27 @@ const constructorMethod = (app) => {
 		}else{
 			const allUsers = await userData.getAllUsers();
 			var i;
+			var uname;
 			for (i = 0; i < allUsers.length; i++) {
 				tuser = allUsers[i];
-				if (tuser.userName == data.username){
-					var uname = tuser;
+				if (tuser.userName === data.username){
+					uname = tuser;
+				}else{
+					uname = undefined;
 				}
 			}
 			try{
 				if(uname == undefined){
-					res.status(401).render('pages/login', {error: true});
+					return res.status(401).render('pages/login', {error: true});
 				}
 			}catch(e){
-				res.status(401).render('pages/login', {error: true});
+				return res.status(401).render('pages/login', {error: true});
 			}
 			let compare = false;
 			try{
 				compare = await bcrypt.compare(data.password, uname.hashedPassword);
 			}catch(e){
-				res.status(401).render('pages/login', {error: true});
+				return res.status(401).render('pages/login', {error: true});
 			}
 			if(!compare){
 				res.status(401).render('pages/login', {error: true});
