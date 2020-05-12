@@ -1,5 +1,6 @@
 div {
     background-color: #025492;
+    align-content: center;
    
 }
 
@@ -30,3 +31,10 @@ div {
       text-align: center;
   }
 
+label {
+    font-size: 12pt;
+}
+
+.main {
+    background-color: white;
+}
