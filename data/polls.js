@@ -49,7 +49,7 @@ module.exports = {
         };
         
         const insertInfo = await pollCollection.insertOne(newPoll);
-        if(insertInfo.insertedCount == 0) throw 'Insert Failed: Could not add band';
+        if(insertInfo.insertedCount == 0) throw 'Insert Failed: Could not add poll';
         
         const newId = insertInfo.insertedId;
         
@@ -70,7 +70,7 @@ module.exports = {
 		return { deleted: true };
 	},
     
-	async updateBand(pollId, pollQuestions, pollAnswers) {
+	async updatePoll(pollId, pollQuestions, pollAnswers) {
 		if(!pollId) throw 'You must provide a poll id to search for';
         if(!pollQuestions || !Array.isArray(pollQuestions)) throw 'You must provide an array of poll questions';
         if(!pollQuestions.length <= 0) throw 'You must provide at least one poll question';
