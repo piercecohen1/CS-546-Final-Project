@@ -1,32 +1,33 @@
 (function ($) {
-    var myNewTaskForm = $('#new-tips-form'),
-      newNameInput = $('title'),
-      newDecriptionArea = $('description'),
-      todoArea = $('#tips-area');
-      console.log(newNameInput);
+    // Let's start writing AJAX calls!
   
-    // function bindEventsToTodoItem(todoItem) {
-    //   todoItem.find('.finishItem').on('click', function (event) {
-    //     event.preventDefault();
-    //     var currentLink = $(this);
-    //     var currentId = currentLink.data('id');
+    var myNewTaskForm = $('#new-item-form'),
+      newNameInput = $('#new-task-name'),
+      newDecriptionArea = $('#new-task-description'),
+      todoArea = $('#todo-area');
   
-    //     var requestConfig = {
-    //       method: 'POST',
-    //       url: '/api/todo/complete/' + currentId
-    //     };
+    function bindEventsToTodoItem(todoItem) {
+      todoItem.find('.finishItem').on('click', function (event) {
+        event.preventDefault();
+        var currentLink = $(this);
+        var currentId = currentLink.data('id');
   
-    //     $.ajax(requestConfig).then(function (responseMessage) {
-    //       var newElement = $(responseMessage);
-    //       bindEventsToTodoItem(newElement);
-    //       todoItem.replaceWith(newElement);
-    //     });
-    //   });
-    // }
+        var requestConfig = {
+          method: 'POST',
+          url: '/api/todo/complete/' + currentId
+        };
   
-    // todoArea.children().each(function (index, element) {
-    //   bindEventsToTodoItem($(element));
-    // });
+        $.ajax(requestConfig).then(function (responseMessage) {
+          var newElement = $(responseMessage);
+          bindEventsToTodoItem(newElement);
+          todoItem.replaceWith(newElement);
+        });
+      });
+    }
+  
+    todoArea.children().each(function (index, element) {
+      bindEventsToTodoItem($(element));
+    });
   
     myNewTaskForm.submit(function (event) {
       event.preventDefault();
@@ -40,11 +41,11 @@
         if (useJson) {
           var requestConfig = {
             method: 'POST',
-            url: '/tips',
+            url: '/api/todo',
             contentType: 'application/json',
             data: JSON.stringify({
-              title: newName,
-              tips: newDescription
+              name: newName,
+              description: newDescription
             })
           };
   

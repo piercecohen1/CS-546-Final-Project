@@ -10,8 +10,9 @@ router.post('/', async (req, res) => {
     if(!data || !data.title || !data.description){
         res.status(400).render('pages/tips', {error: true});
     }else{
-        res.send('partials/tips_item', {title: data.title, tip: data.description});
+        res.status(400).render('partials/tips_item', {title: data.title, tip: data.description});
     }
 });
   
 module.exports = router;
+  
