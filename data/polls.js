@@ -57,48 +57,39 @@ module.exports = {
         return poll;
     },
 
-	async removeBand(id) {
+	async removePoll(id) {
 		if (!id) throw 'You must provide an id to search for';
 
-		const bandCollection = await bands();
+		const pollCollection = await polls();
         const objId = ObjectId.createFromHexString(id);
-		const deletionInfo = await bandCollection.deleteOne({ _id: id });
+		const deletionInfo = await pollCollection.deleteOne({ _id: id });
 
 		if (deletionInfo.deletedCount === 0) {
-			throw `Could not delete band with id of ${id}`;
+			throw `Could not delete poll with id of ${id}`;
 		}
 		return { deleted: true };
 	},
     
-	async updateBand(bandId, bandName, bandMembers, yearFormed, genres, recordLabel, albums) {
-		if(!bandId) throw 'You must provide a band id to search for';
-        if(!bandName) throw 'You must provide a band name';
-        if(!bandMembers || !Array.isArray(bandMembers)) throw 'You must provide an array of band members';
-        if(bandMembers.length <= 0) throw 'You must provide at least one band member';
-        if(!yearFormed) throw 'You must provide a year formed';
-        if(!genres || !Array.isArray(genres)) throw 'You must provide an array of genres';
-        if(genres.length <= 0) throw 'You must provide at least one genre';
-        if(!recordLabel) throw 'You must provide a record label';
-        if(!albums || !Arrray.isArray(albums)) throw 'You must provide an array of albums';
-        if(albums.length <= 0) throw 'You must provide at least one album';
-
-		const bandCollection = await bands();
+	async updateBand(pollId, pollQuestions, pollAnswers) {
+		if(!pollId) throw 'You must provide a poll id to search for';
+        if(!pollQuestions || !Array.isArray(pollQuestions)) throw 'You must provide an array of poll questions';
+        if(!pollQuestions.length <= 0) throw 'You must provide at least one poll question';
+        if(!pollAnswers || !Array.isArray(pollAnswers)) throw 'You must provide an array of poll objects';
+        if(!pollAnswers.length <= 0) throw 'You must provide at least one poll answer object';
         
-		const updatedBand = {
-            bandName: bandName,
-            bandMembers: bandMembers,
-            yearFormed: yearFormed,
-            genres: genres,
-            recordLabel: recordLabel,
-            albums: albums
+		const pollCollection = await polls();
+        
+		const updatedPoll = {
+            pollQuestions: pollQuestions,
+            pollAnswers: pollAnswers
 		};
 
-        const objId = ObjectId.createFromHexString(bandId);
-		const updatedInfo = await bandCollection.updateOne({ _id: objId }, { $set: updatedBand });
+        const objId = ObjectId.createFromHexString(pollId);
+		const updatedInfo = await pollCollection.updateOne({ _id: objId }, { $set: updatedPoll });
 		if (updatedInfo.modifiedCount === 0) {
-			throw 'could not update band successfully';
+			throw 'could not update poll successfully';
 		}
 
-		return await this.getBand(bandId);
+		return await this.getPoll(pollId);
 	}
 };
