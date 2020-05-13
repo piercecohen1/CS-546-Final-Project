@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/new', async (req, res) => {
-    res.render('pages/new/tip');
+    res.render('pages/new/createtip');
 });
 
 router.post('/', async (req, res) => {
