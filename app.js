@@ -72,11 +72,19 @@ app.use('/whattodo', (req, res, next) => {
 	}
 });
 
-app.use('/home', (req, res, next) => {
+app.use('/home', (req, res) => {
 	if (!req.session.AuthCookie) {
 		res.render('pages/login');
 	} else {
-		next();
+		res.render('pages/home');
+	}
+});
+
+app.get('/login', (req, res) => {
+	if (!req.session.AuthCookie) {
+		res.render('pages/login');
+	} else {
+		res.render('pages/home');
 	}
 });
 
