@@ -27,42 +27,34 @@ module.exports = {
     
     /* 
     This async function will return a newly created poll object 
-    pollQuestion - A string that represents the question being asked in the poll
+    pollQuestion - An Array of strings that represents the questions being asked in by the poll
     pollAnswers - A dict where the keys are the options for poll answers, and each value is the number of votes for that poll answer
     
     Example:
-    pollQuestion = "What is the best city to visit?"
-    pollAnswers = {"NYC": 5, "Los Angeles": 4, "Chicago": 2}
+    pollQuestions = ["What is the best city to visit?"]
+    pollAnswers = An Array of poll objects
+    Example of a poll object: {"NYC": 5, "Los Angeles": 4, "Chicago": 2}
     */
-    async addPoll(pollQuestion, pollAnswers){
-        if(!bandName) throw 'You must provide a band name';
-        if(!bandMembers || !Array.isArray(bandMembers)) throw 'You must provide an array of band members';
-        if(bandMembers.length <= 0) throw 'You must provide at least one band member';
-        if(!yearFormed) throw 'You must provide a year formed';
-        if(!genres || !Array.isArray(genres)) throw 'You must provide an array of genres';
-        if(genres.length <= 0) throw 'You must provide at least one genre';
-        if(!recordLabel) throw 'You must provide a record label';
-        if(!albums || !Array.isArray(albums)) throw 'You must provide an array of albums';
-        if(albums.length <= 0) throw 'You must provide at least one album';
+    async addPoll(pollQuestions, pollAnswers){
+        if(!pollQuestions || !Array.isArray(pollQuestions)) throw 'You must provide an array of poll questions';
+        if(!pollQuestions.length <= 0) throw 'You must provide at least one poll question';
+        if(!pollAnswers || !Array.isArray(pollAnswers)) throw 'You must provide an array of poll objects';
+        if(!pollAnswers.length <= 0) throw 'You must provide at least one poll answer object';
         
-        const bandCollection = await bands();
+        const pollCollection = await polls();
         
-        let newBand = {
-            bandName: bandName,
-            bandMembers: bandMembers,
-            yearFormed: yearFormed,
-            genres: genres,
-            recordLabel: recordLabel,
-            albums: albums
+        let newPoll = {
+            pollQuestions: pollQuestions,
+            pollAnswers: pollAnswers
         };
         
-        const insertInfo = await bandCollection.insertOne(newBand);
+        const insertInfo = await pollCollection.insertOne(newPoll);
         if(insertInfo.insertedCount == 0) throw 'Insert Failed: Could not add band';
         
         const newId = insertInfo.insertedId;
         
-        const band = await this.getBand(newId);
-        return band;
+        const poll = await this.getPoll(newId);
+        return poll;
     },
 
 	async removeBand(id) {
