@@ -1,7 +1,6 @@
 div {
     background-color: #025492;
-    align-content: center;
-   
+
 }
 
 .menubar {
@@ -16,25 +15,21 @@ div {
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
-  }
-  
-  .menubar a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-
-  .about {
-      background-color: white;
-  }
-
-  h1, h2 {
-      text-align: center;
-  }
-
-label {
-    font-size: 12pt;
 }
 
-.main {
+.menubar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.about {
     background-color: white;
+}
+
+/* .new_tip {
+    white-space: pre-wrap;
+} */
+
+h1, h2 {
+    text-align: center;
 }

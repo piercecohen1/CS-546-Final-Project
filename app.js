@@ -16,6 +16,16 @@ app.set('view engine', 'handlebars');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+
+// app.get('/tips', (req, res) => {
+// 	const tips = [{
+// 		title: 'Test tip',
+// 		description: 'test desc'
+// 	}]
+// 	res.render('tips', {tips: tips})
+// })
+
+
 const bcrypt = require('bcryptjs');
 
 const handlebarsInstance = exphbs.create({
@@ -24,7 +34,7 @@ const handlebarsInstance = exphbs.create({
 	helpers: {
 	  asJSON: (obj, spacing) => {
 		if (typeof spacing === 'number') return new Handlebars.SafeString(JSON.stringify(obj, null, spacing));
-  
+
 		return new Handlebars.SafeString(JSON.stringify(obj));
 	  }
 	},
