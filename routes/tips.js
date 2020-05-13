@@ -9,10 +9,10 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/new', async (req, res) => {
-    res.render('pages/new/tip');
+    res.render('pages/new/createtip');
 });
 
-router.post('/', async (req, res) => {
+router.post('/new', async (req, res) => {
     const data = req.body;
     if(!data || !data.title || !data.description){
         res.status(400).render('pages/tips', {error: true});

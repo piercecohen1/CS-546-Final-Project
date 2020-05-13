@@ -1,22 +1,22 @@
 const mongoCollections = require('../config/mongoCollections');
-const posts = mongoCollections.posts;
+const tips = mongoCollections.tips;
 const users = require('./users');
 const uuid = require('uuid');
 const { ObjectId } = require('mongodb');
 
 const exportedMethods = {
   async getAllPosts() {
-    const postCollection = await posts();
+    const postCollection = await tips();
     return await postCollection.find({}).toArray();
   },
   async getPostsByTag(tag) {
     if (!tag) throw 'No tag provided';
 
-    const postCollection = await posts();
+    const postCollection = await tips();
     return await postCollection.find({tags: tag}).toArray();
   },
   async getPostById(id) {
-    const postCollection = await posts();
+    const postCollection = await tips();
     //const objId = ObjectId.createFromHexString(id);
     const post = await postCollection.findOne({_id: id});
 
@@ -31,7 +31,7 @@ const exportedMethods = {
       tags = [];
     }
 
-    const postCollection = await posts();
+    const postCollection = await tips();
 
     const userThatPosted = await users.getUserById(posterId);
 
@@ -43,7 +43,7 @@ const exportedMethods = {
         name: `${userThatPosted.firstName} ${userThatPosted.lastName}`
       },
       tags: tags,
-    
+
     };
 
     const newInsertInformation = await postCollection.insertOne(newPost);
@@ -54,7 +54,7 @@ const exportedMethods = {
     return await this.getPostById(newId);
   },
   async removePost(id) {
-    const postCollection = await posts();
+    const postCollection = await tips();
     let post = null;
     try {
       post = await this.getPostById(id);
@@ -71,7 +71,7 @@ const exportedMethods = {
     return true;
   },
   async updatePost(id, updatedPost) {
-    const postCollection = await posts();
+    const postCollection = await tips();
 
     const updatedPostData = {};
 
@@ -106,7 +106,7 @@ const exportedMethods = {
       $pull: {tags: oldTag}
     };
 
-    const postCollection = await posts();
+    const postCollection = await tips();
     await postCollection.updateMany(findDocuments, firstUpdate);
     await postCollection.updateMany(findDocuments, secondUpdate);
 

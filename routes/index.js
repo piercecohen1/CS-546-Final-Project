@@ -7,10 +7,10 @@ const bcrypt = require('bcryptjs');
 const saltRounds = 5;
 
 const constructorMethod = (app) => {
-  	app.use('/polls', pollsRoutes);
-  	app.use('/tips', tipsRoutes);
+  app.use('/polls', pollsRoutes);
+  app.use('/tips', tipsRoutes);
 	app.use('/whattodo', whattodoRoutes);
-	  
+
 	app.post('/login', async (req, res) => {
 		const data = req.body;
 		if(!data || !data.username || !data.password){
@@ -68,7 +68,7 @@ const constructorMethod = (app) => {
 			}else{
 				const hash = await bcrypt.hash(data.password, saltRounds);
 				const user = await userData.addUser(data.username, hash);
-	
+
 				req.session.user = user;
 				req.session.AuthCookie = true;
 				return res.render('pages/home');
@@ -103,13 +103,14 @@ const constructorMethod = (app) => {
 		}
 	});
 
-  	app.get('/', (req, res) => {
+  app.get('/', (req, res) => {
 		res.render('pages/login', {error: false});
   	});
 
 	app.use('*', (req, res) => {
 		res.render('pages/login', {error: false});
 	});
+
 };
 
 module.exports = constructorMethod;

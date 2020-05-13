@@ -1,7 +1,8 @@
 const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
 const users = data.users;
-const posts = data.posts
+const posts = data.posts;
+const tips = data.tips;
 
 async function main() {
 	const db = await dbConnection();
@@ -29,6 +30,10 @@ async function main() {
 		[],
 		aiden._id
 	);
+
+	await tips.addPost("This is a tip!", "This tip is very helpful isn't it?", [], aiden._id);
+	await tips.addPost("Here's another tip!", "This one is the best.", [], aiden._id);
+
 	console.log('Done seeding database');
 	await db.serverConfig.close();
 }

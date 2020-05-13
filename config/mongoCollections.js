@@ -17,6 +17,7 @@ let getCollectionFn = collection => {
 
 /* Now, you can list your collections here: */
 module.exports = {
+  tips: getCollectionFn("tips"),
   posts: getCollectionFn("posts"),
   comments: getCollectionFn("comments"),
   polls: getCollectionFn("polls"),
