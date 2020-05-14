@@ -2,7 +2,7 @@ const express = require('express');
 const data = require('../data');
 
 const router = express.Router();
-const tipData = data.tips;
+const tipData = require('../data/tips');
 
 router.get('/', async (req, res) => {
     res.render('pages/tips');
@@ -13,17 +13,19 @@ router.get('/new', async (req, res) => {
 });
 
 router.post('/new', async (req, res) => {
-    const data = req.body;
-    if(!data || !data.title || !data.description){
+    const postdata = req.body;
+    if(!postdata || !postdata.title || !postdata.description){
         res.status(400).render('pages/tips', {error: true});
     }
     try{
-      const newTip = await tipData.addPost(
-        data.title,
-        data.description
+      const {title, description} = postdata;
+      const newTip = await tipData.addTip(
+        title,
+        description
       );
 
-      res.redirect('/tips');
+      res.json(newTip);
+      // res.redirect('/tips');
     } catch (e) {
       res.status(500).json({error: e});
     }

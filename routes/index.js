@@ -7,8 +7,8 @@ const bcrypt = require('bcryptjs');
 const saltRounds = 5;
 
 const constructorMethod = (app) => {
-  	app.use('/polls', pollsRoutes);
-  	app.use('/tips', tipsRoutes);
+  app.use('/polls', pollsRoutes);
+	app.use('/tips', tipsRoutes);
 	app.use('/whattodo', whattodoRoutes);
 
 	app.post('/login', async (req, res) => {
