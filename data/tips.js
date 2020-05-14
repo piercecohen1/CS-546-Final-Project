@@ -5,25 +5,26 @@ const uuid = require('uuid');
 const { ObjectId } = require('mongodb');
 
 const exportedMethods = {
-  async getAllPosts() {
-    const postCollection = await tips();
-    return await postCollection.find({}).toArray();
+  async getAllTips() {
+    const tipCollection = await tips();
+    return await tipCollection.find({}).toArray();
   },
-  async getPostsByTag(tag) {
+  async getTipsByTag(tag) {
     if (!tag) throw 'No tag provided';
 
-    const postCollection = await tips();
-    return await postCollection.find({tags: tag}).toArray();
+    const tipCollection = await tips();
+    return await tipCollection.find({tags: tag}).toArray();
   },
-  async getPostById(id) {
-    const postCollection = await tips();
+    
+  async getTipById(id) {
+    const tipCollection = await tips();
     //const objId = ObjectId.createFromHexString(id);
-    const post = await postCollection.findOne({_id: id});
+    const tip = await tipCollection.findOne({_id: id});
 
-    if (!post) throw 'Post not found';
-    return post;
+    if (!tip) throw 'Tip not found';
+    return tip;
   },
-  async addPost(title, body, tags, posterId) {
+  async addTip(title, body, tags, posterId) {
     if (typeof title !== 'string') throw 'No title provided';
     if (typeof body !== 'string') throw 'I aint got nobody!';
 
@@ -31,11 +32,11 @@ const exportedMethods = {
       tags = [];
     }
 
-    const postCollection = await tips();
+    const tipCollection = await tips();
 
     const userThatPosted = await users.getUserById(posterId);
 
-    const newPost = {
+    const newTip = {
       title: title,
       body: body,
       poster: {
@@ -43,55 +44,55 @@ const exportedMethods = {
         name: `${userThatPosted.firstName} ${userThatPosted.lastName}`
       },
       tags: tags,
-
     };
 
-    const newInsertInformation = await postCollection.insertOne(newPost);
+    const newInsertInformation = await tipCollection.insertOne(newTip);
     const newId = newInsertInformation.insertedId;
 
-    await users.addPostToUser(posterId, newId, title);
+    await users.addTipToUser(posterId, newId, title);
 
-    return await this.getPostById(newId);
+    return await this.getTipById(newId);
   },
-  async removePost(id) {
-    const postCollection = await tips();
-    let post = null;
+  async removeTip(id) {
+    const tipCollection = await tips();
+    let tip = null;
     try {
-      post = await this.getPostById(id);
+      tip = await this.getTipById(id);
     } catch (e) {
       console.log(e);
       return;
     }
     //const objId = ObjectId.createFromHexString(id);
-    const deletionInfo = await postCollection.removeOne({_id: id});
+    const deletionInfo = await tipCollection.removeOne({_id: id});
     if (deletionInfo.deletedCount === 0) {
-      throw `Could not delete post with id of ${id}`;
+      throw `Could not delete tip with id of ${id}`;
     }
-    await users.removePostFromUser(post.poster.id, id);
+    await users.removeTipFromUser(tip.poster.id, id);
     return true;
   },
-  async updatePost(id, updatedPost) {
-    const postCollection = await tips();
+  async updateTip(id, updatedTip) {
+    const tipCollection = await tips();
 
-    const updatedPostData = {};
+    const updatedTipData = {};
 
-    if (updatedPost.tags) {
-      updatedPostData.tags = updatedPost.tags;
+    if (updatedTip.tags) {
+      updatedTipData.tags = updatedTip.tags;
     }
 
-    if (updatedPost.title) {
-      updatedPostData.title = updatedPost.title;
+    if (updatedTip.title) {
+      updatedTipData.title = updatedTip.title;
     }
 
-    if (updatedPost.body) {
-      updatedPostData.body = updatedPost.body;
+    if (updatedTip.body) {
+      updatedTipData.body = updatedTip.body;
     }
 
     //const objId = ObjectId.createFromHexString(id);
-    await postCollection.updateOne({_id: id}, {$set: updatedPostData});
+    await tipCollection.updateOne({_id: id}, {$set: updatedTipData});
 
-    return await this.getPostById(id);
+    return await this.getTipById(id);
   },
+    
   async renameTag(oldTag, newTag) {
     if (oldTag === newTag) throw 'tags are the same';
     let findDocuments = {
@@ -106,11 +107,11 @@ const exportedMethods = {
       $pull: {tags: oldTag}
     };
 
-    const postCollection = await tips();
-    await postCollection.updateMany(findDocuments, firstUpdate);
-    await postCollection.updateMany(findDocuments, secondUpdate);
+    const tipCollection = await tips();
+    await tipCollection.updateMany(findDocuments, firstUpdate);
+    await tipCollection.updateMany(findDocuments, secondUpdate);
 
-    return await this.getPostsByTag(newTag);
+    return await this.getTipsByTag(newTag);
   }
 };
 

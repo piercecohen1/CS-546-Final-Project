@@ -72,6 +72,20 @@ let exportedMethods = {
 
     return await this.getUserById(userId);
   },
+  async addTipToUser(userId, tipId, tipTitle) {
+    let currentUser = await this.getUserById(userId);
+    console.log(currentUser);
+
+    const userCollection = await users();
+    const updateInfo = await userCollection.updateOne(
+      {_id: userId},
+      {$addToSet: {tips: {id: tipId, title: tipTitle}}}
+    );
+
+    if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Tip Update failed';
+
+    return await this.getUserById(userId);
+  },
   async removePostFromUser(userId, postId) {
     //const objId = ObjectId.createFromHexString(id);
     let currentUser = await this.getUserById(userId);
@@ -80,6 +94,17 @@ let exportedMethods = {
     const userCollection = await users();
     const updateInfo = await userCollection.updateOne({_id: id}, {$pull: {posts: {id: postId}}});
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
+
+    return await this.getUserById(userId);
+  },
+  async removeTipFromUser(userId, tipId) {
+    //const objId = ObjectId.createFromHexString(id);
+    let currentUser = await this.getUserById(userId);
+    console.log(currentUser);
+
+    const userCollection = await users();
+    const updateInfo = await userCollection.updateOne({_id: id}, {$pull: {tips: {id: tipId}}});
+    if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Tip Update failed';
 
     return await this.getUserById(userId);
   }
