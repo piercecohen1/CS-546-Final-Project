@@ -127,7 +127,18 @@ h1, h2 {
 .city{
 	width: 100px;
 	font-weight: bold;
-	float: left;
+	/* float: left; */
 	padding-top: 8px;
 	padding-right: 5px;
+}
+.piechart{
+	margin: 0 auto;
+	text-align: center;
+	display: inline-block;
+}
+
+.cityform{
+	margin: 0 auto;
+	text-align: center;
+	display: inline-block;
 }

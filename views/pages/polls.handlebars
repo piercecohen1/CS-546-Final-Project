@@ -13,15 +13,19 @@
 
 
 <div class="form-style-2">
-<div class="form-style-2-heading">Pick Your Favorite City!</div>
-<form action="" method="post">
-  <input type="radio" id="nyc" class="city">
-  <label for="nyc">New York City</label><br>
-  <input type="radio" id="paris" class="city">
-  <label for="paris">Paris</label><br>
-  <input type="radio" id="istanbul" class="city">
-  <label for="istanbul">Istanbul</label>
-  <label for="field5"><span>Reason<span class="required">*</span></span><textarea name="field5" class="textarea-field"></textarea></label>
-  <label><span> </span><input type="submit" value="Submit" /></label>
-</form>
+<div class="form-style-2-heading">Which City is the Best for a Summer Stroll?</div>
+{{!-- <form id="cityform" name="cityform"> --}}
+  <form id="paris">
+    <button type="submit">Paris!</button>
+  </form>
+  <form id="nyc">
+    <button type="submit">New York City!</button>
+  </form>
+  <form id="istanbul">
+    <button type="submit">Istanbul!</button>
+  </form>
+{{!-- </form> --}}
 </div>
+<div id="piechart" name="piechart"></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src = "public/js/pie.js"></script>
