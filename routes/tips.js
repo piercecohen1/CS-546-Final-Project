@@ -5,7 +5,8 @@ const router = express.Router();
 const tipData = require('../data/tips');
 
 router.get('/', async (req, res) => {
-    res.render('pages/tips');
+    const tipsList = await tipData.getAllTips();
+    res.render('pages/tips', {tips: tipsList});
 });
 
 router.get('/new', async (req, res) => {
