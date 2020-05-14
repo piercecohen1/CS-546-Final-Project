@@ -10,6 +10,8 @@ async function main() {
 
 	const patrick = await users.addUser('Patrick', 'Hill', 'Patrick@hill.com');
 	const id = patrick._id;
+
+	const himanshu = await users.addUser('himanshu_rana99', '$2a$05$yR8JDgSj0XsSsDICg27c1Ol3apqz0ntajAEdBvawYzi29sd3FVt6y', 'hrana2@stevens.edu')
     
     console.log(users);
     console.log(tips);
