@@ -104,11 +104,19 @@ const constructorMethod = (app) => {
 	});
 
   app.get('/', (req, res) => {
-		res.render('pages/login', {error: false});
+		if(!req.session.AuthCookie){
+			res.render('pages/login', {error: false});
+		}else{
+			res.render('pages/home', {error: false});
+		}
   	});
 
 	app.use('*', (req, res) => {
-		res.render('pages/login', {error: false});
+		if(!req.session.AuthCookie){
+			res.render('pages/login', {error: false});
+		}else{
+			res.render('pages/home', {error: false});
+		}
 	});
 
 };
