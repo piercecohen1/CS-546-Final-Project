@@ -19,7 +19,5 @@ let getCollectionFn = (collection) => {
 module.exports = {
   tips: getCollectionFn("tips"),
   posts: getCollectionFn("posts"),
-  comments: getCollectionFn("comments"),
-  polls: getCollectionFn("polls"),
   users: getCollectionFn("users")
 };
