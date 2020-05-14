@@ -1,8 +1,7 @@
 const dbConnection = require('../config/mongoConnection');
-const data = require('../data/');
-const users = data.users;
-const posts = data.posts;
-const tips = data.tips;
+const users = require('../data/users');
+const posts = require('../data/posts');
+const tips = require('../data/tips');
 
 async function main() {
 	const db = await dbConnection();
@@ -11,6 +10,11 @@ async function main() {
 
 	const patrick = await users.addUser('Patrick', 'Hill');
 	const id = patrick._id;
+    
+    console.log(users);
+    console.log(tips);
+    console.log(posts);
+    
 
 	await posts.addPost('Hello, class!', 'Today we are creating a blog!', [], id);
 
@@ -20,6 +24,7 @@ async function main() {
 		[],
 		id
 	);
+    
 	await posts.addPost('Using routes', 'The purpose of today is to simply look at some GET routes', [], id);
 
 	const aiden = await users.addUser('Aiden', 'Hill');
@@ -31,13 +36,13 @@ async function main() {
 		aiden._id
 	);
 
-	await tips.addPost(
+	await tips.addTip(
         "This is a tip!",
         "This tip is very helpful isn't it?",
         [],
         id);
     
-	await tips.addPost(
+	await tips.addTip(
         "Here's another tip!",
         "This one is the best.",
         [],
