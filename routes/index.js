@@ -14,7 +14,7 @@ const constructorMethod = (app) => {
 	app.post('/login', async (req, res) => {
 		const data = req.body;
 		if(!data || !data.username || !data.password){
-			res.status(400).render('pages/login', {error: true});
+			res.status(400).render('login', {error: true});
 		}else{
 			const allUsers = await userData.getAllUsers();
 			var i;
