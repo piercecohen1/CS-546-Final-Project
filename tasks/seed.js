@@ -8,7 +8,7 @@ async function main() {
 
 	await db.dropDatabase();
 
-	const patrick = await users.addUser('Patrick', 'Hill');
+	const patrick = await users.addUser('Patrick', 'Hill', 'Patrick@hill.com');
 	const id = patrick._id;
     
     console.log(users);
@@ -27,7 +27,7 @@ async function main() {
     
 	await posts.addPost('Using routes', 'The purpose of today is to simply look at some GET routes', [], id);
 
-	const aiden = await users.addUser('Aiden', 'Hill');
+	const aiden = await users.addUser('Aiden', 'Hill', 'Aiden@hill.com');
 	await posts.addPost("Aiden's First Post", "I'm 6 months old, I can't blog1", [], aiden._id);
 	await posts.addPost(
 		"Aiden's Second Post",
