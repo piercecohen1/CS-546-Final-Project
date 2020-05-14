@@ -32,12 +32,15 @@ const constructorMethod = (app) => {
 					return res.status(401).render('pages/login', {error: true});
 				}
 			}catch(e){
-				return res.status(401).render('pages/login', {error: true});
+                console.log("An error was caught!");
+				return res.status(401).render('pages
+                return res.status(401).render('pages/login', {error: true});
 			}
 			let compare = false;
 			try{
 				compare = await bcrypt.compare(data.password, uname.hashedPassword);
 			}catch(e){
+                console.log("An error was caught!");
 				return res.status(401).render('pages/login', {error: true});
 			}
 			if(!compare){
@@ -107,6 +110,7 @@ const constructorMethod = (app) => {
 		if(!req.session.AuthCookie){
 			res.render('pages/login', {error: false});
 		}else{
+            console.log("An error was caught!");
 			res.render('pages/home', {error: false});
 		}
   	});
@@ -115,6 +119,7 @@ const constructorMethod = (app) => {
 		if(!req.session.AuthCookie){
 			res.render('pages/login', {error: false});
 		}else{
+            console.log("An error was caught!");
 			res.render('pages/home', {error: false});
 		}
 	});
