@@ -1,7 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const posts = mongoCollections.posts;
 const users = require('./users');
-const uuid = require('uuid/v4');
+const uuid = require('uuid');
+const { ObjectId } = require('mongodb');
 
 const exportedMethods = {
   async getAllPosts() {
@@ -12,11 +13,12 @@ const exportedMethods = {
     if (!tag) throw 'No tag provided';
 
     const postCollection = await posts();
-    return await postCollection.find({ tags: tag }).toArray();
+    return await postCollection.find({tags: tag}).toArray();
   },
   async getPostById(id) {
     const postCollection = await posts();
-    const post = await postCollection.findOne({ _id: id });
+    //const objId = ObjectId.createFromHexString(id);
+    const post = await postCollection.findOne({_id: id});
 
     if (!post) throw 'Post not found';
     return post;
@@ -41,7 +43,7 @@ const exportedMethods = {
         name: `${userThatPosted.firstName} ${userThatPosted.lastName}`
       },
       tags: tags,
-      _id: uuid()
+
     };
 
     const newInsertInformation = await postCollection.insertOne(newPost);
@@ -60,7 +62,8 @@ const exportedMethods = {
       console.log(e);
       return;
     }
-    const deletionInfo = await postCollection.removeOne({ _id: id });
+    //const objId = ObjectId.createFromHexString(id);
+    const deletionInfo = await postCollection.removeOne({_id: id});
     if (deletionInfo.deletedCount === 0) {
       throw `Could not delete post with id of ${id}`;
     }
@@ -84,7 +87,8 @@ const exportedMethods = {
       updatedPostData.body = updatedPost.body;
     }
 
-    await postCollection.updateOne({ _id: id }, { $set: updatedPostData });
+    //const objId = ObjectId.createFromHexString(id);
+    await postCollection.updateOne({_id: id}, {$set: updatedPostData});
 
     return await this.getPostById(id);
   },
@@ -95,11 +99,11 @@ const exportedMethods = {
     };
 
     let firstUpdate = {
-      $addToSet: { tags: newTag }
+      $addToSet: {tags: newTag}
     };
 
     let secondUpdate = {
-      $pull: { tags: oldTag }
+      $pull: {tags: oldTag}
     };
 
     const postCollection = await posts();

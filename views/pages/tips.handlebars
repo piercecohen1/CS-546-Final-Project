@@ -1,23 +1,17 @@
-<div class="main">
-    <p>
-        <h1>Find all of the best travel hacks.</h1>
-        <h2>Make traveling so much easier from tips by our users.</h2>
-    </p>
-</div>
+<section>
+  <div class="main">
+      <p>
+          <h1>Find all of the best travel hacks.</h1>
+          <h2>Make traveling so much easier from tips by our users.</h2>
+      </p>
+  </div>
 
-<div class="row">
-    <div class="col-sm-12 col-md-6" id="tips-area">
-        {{#each tipsItems}} {{> tips_item }} {{/each}}
-    </div>
+  <a href="tips/new">Add a Tip</a>
 
-    <div id="new-content">
-    </div>
-    <div class="new_tip">
-      <a href="tips/new">Add a New Tip</a>
-        <!-- <form onsubmit "return tip_items()" id="new-item-form">
-            <label>Tip Title <br><input id="new-task-name" type="text"/></label>
-            <label>Tip Description <br><textarea id="new-task-description" rows="4" cols="50"></textarea></label>
-            <input type="submit" value="Add new task"/>
-        </form> -->
-    </div>
-</div>
+  {{#each posts}}
+    <article class="tip">
+      <h2><a href="/tips/{{_id}}">{{title}}</a></h2>
+      <p>{{body}}</p>
+    </article>
+  {{/each}}
+</section>

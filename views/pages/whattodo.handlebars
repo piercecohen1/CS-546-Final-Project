@@ -1,15 +1,18 @@
-<div class="about">
-    <p>
-       <h1>Find out what to do on your next vacation</h1> 
-       <h2>Read about interesting activities and attractions for your getaway.</h2>
-    </p>
-</div>
 
+<section>
+  <div class="main">
+      <p>
+        <h1>Find out what to do on your next vacation</h1>
+        <h2>Read about interesting activities and attractions for your getaway.</h2>
+      </p>
+  </div>
 
-<div>
-    <form id="new_post">
-        <label>Post Title: <input id="new-post" type="text" /></label><br>
-        <label>Content: <input id="new-post" type="text" /></label>
-        <input type="submit" value="Post" />
-    </form>
-</div>
+  <a href="whattodo/new">Add a Post</a>
+
+  {{#each posts}}
+    <article class="post">
+      <h2><a href="/posts/{{_id}}">{{title}}</a></h2>
+      <p>{{body}}</p>
+    </article>
+  {{/each}}
+</section>

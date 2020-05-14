@@ -1,8 +1,33 @@
-<article class="new-tip">
+<!-- <article class="new-tip">
   <h1>Make a New Tip!</h1>
   <form action="/" method="POST" class="new-tip-form">
       <label>Tip Title <br><input id="new-task-name" type="text"/></label>
       <label>Tip Description <br><textarea id="new-task-description" rows="4" cols="50"></textarea></label>
       <button type="submit" ><a href="/tips" >Create New Tip</a></button>
   </form>
+</article> -->
+
+<article class="new-tip">
+  <h1>Make a Tip</h1>
+  <form action="/tips" method="POST" class="new-tip-form">
+    <label>
+      Tip Title
+      <input type="text" name="title" placeholder="Tip Title" value="{{tip.title}}" class="full-width-input"/>
+    </label>
+    <label for="tip-body">
+      Tip Body
+    </label>
+    <textarea id="tip-body" name="body" rows="4" placeholder="Tip Content" class="full-width-input">{{tip.body}}</textarea>
+
+    <button type="submit">Create New Tip</button>
+  </form>
+  {{#if hasErrors}}
+  <ul class="error-list">
+    {{#each errors}}
+    <li>
+      {{this}}
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
 </article>
