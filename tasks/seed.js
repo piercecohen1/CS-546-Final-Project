@@ -31,8 +31,17 @@ async function main() {
 		aiden._id
 	);
 
-	await tips.addPost("This is a tip!", "This tip is very helpful isn't it?", [], aiden._id);
-	await tips.addPost("Here's another tip!", "This one is the best.", [], aiden._id);
+	await tips.addPost(
+        "This is a tip!",
+        "This tip is very helpful isn't it?",
+        [],
+        id);
+    
+	await tips.addPost(
+        "Here's another tip!",
+        "This one is the best.",
+        [],
+        aiden._id);
 
 	console.log('Done seeding database');
 	await db.serverConfig.close();
