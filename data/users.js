@@ -19,13 +19,13 @@ let exportedMethods = {
     if (!user) throw 'User not found';
     return user;
   },
-  async addUser(userName, hashedPassword) {
+  async addUser(userName, hashedPassword, email) {
     const userCollection = await users();
 
     let newUser = {
       userName: userName,
       hashedPassword: hashedPassword,
-      
+      email: email,
       posts: []
     };
 
@@ -47,8 +47,9 @@ let exportedMethods = {
     console.log(user);
 
     let userUpdateInfo = {
-      firstName: updatedUser.firstName,
-      lastName: updatedUser.lastName
+      userName: userName,
+      hashedPassword: hashedPassword,
+      email: email
     };
 
     const userCollection = await users();
