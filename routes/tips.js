@@ -1,37 +1,89 @@
 const express = require('express');
-const data = require('../data');
-
 const router = express.Router();
-const tipData = require('../data/tips');
-
-router.get('/', async (req, res) => {
-    const tipsList = await tipData.getAllTips();
-    res.render('pages/tips', {tips: tipsList});
-});
-
+const data = require('../data');
+const tipData = data.tips;
+const userData = data.users;
 router.get('/new', async (req, res) => {
-    res.render('pages/new/createtip');
+  const users = await userData.getAllUsers();
+  res.render('pages/newtip', { users: users });
 });
-
-router.post('/new', async (req, res) => {
-    const postdata = req.body;
-    if(!postdata || !postdata.title || !postdata.description){
-        res.status(400).render('pages/tips', {error: true});
-    }
-    try{
-      const {title, description} = postdata;
-      const newTip = await tipData.addTip(
-        title,
-        description
-      );
-
-      res.json(newTip);
-      // res.redirect('/tips');
-    } catch (e) {
-      res.status(500).json({error: e});
-    }
-    // res.send('partials/tips_item', {title: data.title, tip: data.description});
-
+router.get('/:id', async (req, res) => {
+  try {
+    const tip = await tipData.getTipById(req.params.id);
+    res.render('pages/newtip', { tip: tip });
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
 });
-
+router.get('/tag/:tag', async (req, res) => {
+  const tipList = await tipData.getTipsByTag(req.params.tag);
+  res.render('pages/index', { tips : tipList });
+});
+router.get('/', async (req, res) => {
+  const tipList = await tipData.getAllTips();
+  res.render('pages/index', { tips: tipList });
+});
+router.post('/', async (req, res) => {
+  let tipPostData = req.body;
+  let errors = [];
+  if (!tipPostData.title) {
+    errors.push('No title provided');
+  }
+  if (!tipPostData.body) {
+    errors.push('No body provided');
+  }
+  if (!tipPostData.posterId) {
+    errors.push('No poster selected');
+  }
+  if (errors.length > 0) {
+    const users = await userData.getAllUsers();
+    res.render('pages/newtip', {
+      errors: errors,
+      hasErrors: true,
+      tip: tipPostData,
+      users: users
+    });
+    return;
+  }
+  try {
+    const newTip = await tipData.addTip(
+      tipPostData.title,
+      tipPostData.body,
+      tipPostData.tags || [],
+      tipPostData.posterId
+    );
+    res.redirect(`/tips/${newTip._id}`);
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
+});
+router.put('/:id', async (req, res) => {
+  let updatedData = req.body;
+  try {
+    await tipData.getTipById(req.params.id);
+  } catch (e) {
+    res.status(404).json({ error: 'Tip not found' });
+    return;
+  }
+  try {
+    const updatedTip = await tipData.updateTip(req.params.id, updatedData);
+    res.json(updatedTip);
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
+});
+router.delete('/:id', async (req, res) => {
+  try {
+    await tipData.getTipById(req.params.id);
+  } catch (e) {
+    res.status(404).json({ error: 'Tip not found' });
+    return;
+  }
+  try {
+    await tipData.removeTip(req.params.id);
+    res.sendStatus(200);
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
+});
 module.exports = router;
