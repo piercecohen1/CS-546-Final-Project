@@ -1,0 +1,10 @@
+<section>
+  <h1>Tips</h1>
+
+  {{#each tips}}
+    <article class="tips">
+      <h2><a href="/tips/{{_id}}">{{title}}</a></h2>
+      <p>{{body}}</p>
+    </article>
+  {{/each}}
+</section>
