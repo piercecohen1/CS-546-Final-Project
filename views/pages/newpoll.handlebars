@@ -1,35 +1,40 @@
-{{#if error}}
-  <p>Enter Both a Poll Question!</p>
-{{/if}}
+<article class="new-post">
+  <h1>Make a Post</h1>
+  <form action="/posts" method="POST" class="new-post-form">
+    <label>
+      Post Title
+      <input type="text" name="title" placeholder="Post Title" value="{{post.title}}" class="full-width-input"/>
+    </label>
+    <label for="post-body">
+      Post Body
+    </label>
+    <textarea id="post-body" name="body" rows="4" placeholder="Post Content" class="full-width-input">{{post.body}}</textarea>
 
-<div class="main">
-    <p>
-        <h1>Travel Polls</h1> 
-        <h3>Please answer the following:</h3>
-    </p>
-</div>
-
-
-<div class="row">
-    <div class="new_poll">
-        <form id="new-poll-form" action = "/poll" method = "post">
-            <div class="container">
-                <label for="pollQ"><b>Poll Question:</b></label> 
-                <input id="pollQ" name="pollQ" type="text" placeholder="Enter Your Poll Question"><br>
-                <label for="pollAnswerOne"><b>Answer 1:</b>
-                <input id="pollAnswerOne" name="pollAnswerOne" rows="4" cols="50" placeholder="Answer 1">
-                <label for="pollAnswerTwo"><b>Answer 1:</b>
-                <input id="pollAnswerTwo" name="pollAnswerTwo" rows="4" cols="50" placeholder="Answer 1">
-                <label for="pollAnswerOne"><b>Answer 1:</b>
-                <input id="pollAnswerOne" name="pollAnswerOne" rows="4" cols="50" placeholder="Answer 1">
-                <button type="submit">Post Tip!</button>
-            </div>
-        </form>
-    </div>
-    <div class="col-sm-12 col-md-6" id="tips-area">
-        {{#each tipsItems}} {{> tips_item }} {{/each}}
-    </div>
-    <div id="new-content">
-    </div>
-</div>
-
+    <label for="poster">
+      Poster
+    </label>
+    <select class="full-width-input" name="posterId">
+      <option value="">Select User...</option>
+      {{#each users}}
+        <option value="{{_id}}">{{firstName}} {{lastName}}</option>
+      {{/each}}
+    </select>
+    <label>
+      <input type="radio" name="user-test" value="1" /> One
+    </label>
+    <label>
+      <input type="radio" name="user-test" value="2" /> Two
+    </label>
+    <button type="submit">Create New Post</button>
+    <button type="reset">Clear Form</button>
+  </form>
+  {{#if hasErrors}}
+  <ul class="error-list">
+    {{#each errors}}
+    <li>
+      {{this}}
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</article>

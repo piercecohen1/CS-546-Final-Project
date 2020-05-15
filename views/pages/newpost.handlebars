@@ -10,7 +10,23 @@
     </label>
     <textarea id="post-body" name="body" rows="4" placeholder="Post Content" class="full-width-input">{{post.body}}</textarea>
 
+    <label for="poster">
+      Poster
+    </label>
+    <select class="full-width-input" name="posterId">
+      <option value="">Select User...</option>
+      {{#each users}}
+        <option value="{{_id}}">{{firstName}} {{lastName}}</option>
+      {{/each}}
+    </select>
+    <label>
+      <input type="radio" name="user-test" value="1" /> One
+    </label>
+    <label>
+      <input type="radio" name="user-test" value="2" /> Two
+    </label>
     <button type="submit">Create New Post</button>
+    <button type="reset">Clear Form</button>
   </form>
   {{#if hasErrors}}
   <ul class="error-list">

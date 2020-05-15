@@ -1,15 +1,14 @@
-<!--
 <article class="new-post">
-  <h1>Create New Tip</h1>
-  <form action="/tips" method="POST" class="new-post-form">
+  <h1>Make a Post</h1>
+  <form action="/posts" method="POST" class="new-post-form">
     <label>
       Post Title
-      <input type="text" name="title" placeholder="Tip Title" value="{{tip.title}}" class="full-width-input"/>
+      <input type="text" name="title" placeholder="Post Title" value="{{post.title}}" class="full-width-input"/>
     </label>
     <label for="post-body">
-      Tip Body
+      Post Body
     </label>
-    <textarea id="tip-body" name="body" rows="4" placeholder="Tip Content" class="full-width-input">{{tip.body}}</textarea>
+    <textarea id="post-body" name="body" rows="4" placeholder="Post Content" class="full-width-input">{{post.body}}</textarea>
 
     <label for="poster">
       Poster
@@ -26,46 +25,8 @@
     <label>
       <input type="radio" name="user-test" value="2" /> Two
     </label>
-
-    <div>
-      <label>
-      <input type="checkbox" name="checkbox-test" value="first" /> First
-  </label></div>
-    <div>
-      <label>
-      <input type="checkbox" name="checkbox-test" value="second" /> Second
-  </label></div>
     <button type="submit">Create New Post</button>
     <button type="reset">Clear Form</button>
-    <button type="button">Click me!</button>
-  </form>
-  {{#if hasErrors}}
-  <ul class="error-list">
-    {{#each errors}}
-    <li>
-      {{this}}
-    </li>
-    {{/each}}
-  </ul>
-  {{/if}}
-</article>
--->
-
-
-
-<article class="new-tip">
-  <h1>Make a Tip</h1>
-  <form action="/tips" method="POST" class="new-tip-form">
-    <label>
-      Tip Title
-      <input type="text" name="title" placeholder="Tip Title" value="{{tip.title}}" class="full-width-input"/>
-    </label>
-    <label for="tip-body">
-      Tip Body
-    </label>
-    <textarea id="tip-body" name="body" rows="4" placeholder="Tip Content" class="full-width-input">{{tip.body}}</textarea>
-
-    <button type="submit">Create New Tip</button>
   </form>
   {{#if hasErrors}}
   <ul class="error-list">
