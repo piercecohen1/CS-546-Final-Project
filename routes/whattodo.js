@@ -6,17 +6,8 @@ const userData = data.users;
 
 router.get('/new', async (req, res) => {
   const users = await userData.getAllUsers();
-  res.render('pages/new/createpost', { users: users });
+  res.render('pages/newpost', { users: users });
 });
-
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const post = await postData.getPostById(req.params.id);
-//     res.render('posts/single', { post: post });
-//   } catch (e) {
-//     res.status(500).json({ error: e });
-//   }
-// });
 
 router.get('/tag/:tag', async (req, res) => {
   const postList = await postData.getPostsByTag(req.params.tag);
