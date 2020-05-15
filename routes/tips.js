@@ -6,13 +6,13 @@ const userData = data.users;
 
 router.get('/new', async (req, res) => {
   const users = await userData.getAllUsers();
-  res.render('tips/new', { users: users });
+  res.render('pages/newtip', { users: users });
 });
 
 router.get('/:id', async (req, res) => {
   try {
     const tip = await tipData.getTipById(req.params.id);
-    res.render('tips/single', { tip: tip });
+    res.render('pages/newtip', { tip: tip });
   } catch (e) {
     res.status(500).json({ error: e });
   }
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
 
   if (errors.length > 0) {
     const users = await userData.getAllUsers();
-    res.render('tips/new', {
+    res.render('pages/newtip', {
       errors: errors,
       hasErrors: true,
       tip: tipPostData,

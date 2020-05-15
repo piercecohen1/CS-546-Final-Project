@@ -6,26 +6,26 @@ const userData = data.users;
 
 router.get('/new', async (req, res) => {
   const users = await userData.getAllUsers();
-  res.render('pages/new/createpost', { users: users });
+  res.render('posts/new', { users: users });
 });
 
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const post = await postData.getPostById(req.params.id);
-//     res.render('posts/single', { post: post });
-//   } catch (e) {
-//     res.status(500).json({ error: e });
-//   }
-// });
+router.get('/:id', async (req, res) => {
+  try {
+    const post = await postData.getPostById(req.params.id);
+    res.render('posts/single', { post: post });
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
+});
 
 router.get('/tag/:tag', async (req, res) => {
   const postList = await postData.getPostsByTag(req.params.tag);
-  res.render('pages/whattodo', { posts: postList });
+  res.render('posts/index', { posts: postList });
 });
 
 router.get('/', async (req, res) => {
   const postList = await postData.getAllPosts();
-  res.render('pages/whattodo', { posts: postList });
+  res.render('posts/index', { posts: postList });
 });
 
 router.post('/', async (req, res) => {
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
 
   if (errors.length > 0) {
     const users = await userData.getAllUsers();
-    res.render('pages/whattodo', {
+    res.render('posts/new', {
       errors: errors,
       hasErrors: true,
       post: blogPostData,
@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
       blogPostData.posterId
     );
 
-    res.redirect(`/whattodo/${newPost._id}`);
+    res.redirect(`/posts/${newPost._id}`);
   } catch (e) {
     res.status(500).json({ error: e });
   }
