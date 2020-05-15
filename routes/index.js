@@ -110,6 +110,38 @@ const constructorMethod = (app) => {
 			res.render('pages/home', {error: false});
 		}
   	});
+    
+  app.get('/', (req, res) => {
+		if(!req.session.AuthCookie){
+			res.render('pages/login', {error: false});
+		}else{
+			res.render('pages/home', {error: false});
+		}
+  	});
+    
+    app.get('/newtip', (req, res) => {
+		if(!req.session.AuthCookie){
+			res.render('pages/newtip', {error: false});
+		}else{
+			res.render('pages/newtip', {error: false});
+		}
+    });
+    
+    app.get('/newpost', (req, res) => {
+		if(!req.session.AuthCookie){
+			res.render('pages/newpost', {error: false});
+		}else{
+			res.render('pages/newpost', {error: false});
+		}
+    });
+    
+    app.get('/newpoll', (req, res) => {
+		if(!req.session.AuthCookie){
+			res.render('pages/newpoll', {error: false});
+		}else{
+			res.render('pages/newpoll', {error: false});
+		}
+    });
 
 	app.use('*', (req, res) => {
 		if(!req.session.AuthCookie){
