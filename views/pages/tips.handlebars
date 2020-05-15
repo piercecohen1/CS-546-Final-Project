@@ -3,7 +3,6 @@
       <p>
           <h1>Find all of the best travel hacks.</h1>
           <h2>Make traveling so much easier from tips by our users.</h2>
-           <a href="tips/new">Add a Tip</a>
       </p>
   </div>
   
@@ -11,7 +10,7 @@
 
   {{#each posts}}
     <article class="tip">
-      <h2><a href="/tips/{{_id}}">{{title}}</a></h2>
+      <h2>{{title}}</h2>
       <p>{{body}}</p>
     </article>
   {{/each}}
