@@ -1,63 +1,15 @@
-* {
-	box-sizing: border-box;
-}
-
-html,
 body {
-	font-size: 14pt;
-}
+	background: white
 
-body {
-	background: #dedede;
-	font-family: Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 main {
-	max-width: 75%;
+	max-width: 100%;
 	margin: auto;
 }
 
 header {
 	border-bottom: 1px solid #afafaf;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	color: #222;
-	margin-bottom: 5px;
-}
-
-h1 {
-	font-size: 2rem;
-}
-
-h2 {
-	font-size: 1.5rem;
-}
-
-h3 {
-	font-size: 1.5rem;
-}
-
-h4 {
-	font-size: 1.25rem;
-}
-
-h5 {
-	font-size: 1.15rem;
-}
-
-h6 {
-	font-size: 1.05rem;
-}
-
-p {
-	font-size: 1rem;
-	line-height: 2;
 }
 
 .post {
@@ -101,4 +53,50 @@ label {
 
 .author-link:active {
 	color: #ff0000;
+}
+
+
+div {
+    background-color: #025492;
+    align-content: center;
+   
+}
+
+.menubar {
+    background-color: #f8cf40;
+    overflow: hidden;
+}
+
+.menubar a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .menubar a:hover {
+    background-color: #025492;
+    color: white;
+  }
+
+  .about {
+      background-color: white;
+  }
+
+  h1, h2 {
+      text-align: center;
+  }
+
+label {
+    font-size: 12pt;
+}
+
+.main {
+    background-color: white;
+}
+
+.newtip {
+	align-items: center;
 }
