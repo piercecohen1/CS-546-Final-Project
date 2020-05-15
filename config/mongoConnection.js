@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 const mongoConfig = {
   serverUrl: 'mongodb://localhost:27017/',
-  database: 'advancedApiBasedBlog'
+  database: 'TravelingDucks'
 };
 
 let _connection = undefined;
